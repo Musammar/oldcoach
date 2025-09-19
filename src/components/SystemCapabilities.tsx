@@ -1,235 +1,27 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { 
-  Bot, 
-  MessageSquare, 
-  Calendar, 
-  Zap,
-  Users,
-  TrendingUp,
-  CheckCircle,
-  ArrowRight,
-  Clock,
-  Sparkles,
-  Target,
-  Cpu
-} from 'lucide-react';
-
-const SystemCapabilities: React.FC = () => {
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeDemo, setActiveDemo] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveDemo((prev) => (prev + 1) % 3);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const coreCapabilities = [
-    {
-      icon: Bot,
-      title: "AI Voice Assistant",
-      subtitle: "24/7 Intelligent Receptionist",
-      color: "from-purple-500 to-pink-500",
-      bgColor: "bg-purple-50",
-      features: [
-        "Natural conversation handling",
-        "Automatic appointment booking", 
-        "Lead qualification & scoring",
-        "Multi-language support"
-      ],
-      metric: "95% Success Rate",
-      description: "Your AI receptionist handles calls like a human, books appointments, and qualifies leads automatically."
-    },
-    {
-      icon: MessageSquare,
-      title: "Smart Communication Hub",
-      subtitle: "Unified Messaging Platform",
-      color: "from-blue-500 to-cyan-500", 
-      bgColor: "bg-blue-50",
-      features: [
-        "WhatsApp automation",
-        "Smart SMS campaigns",
-        "Email sequences", 
-        "Unified inbox"
-      ],
-      metric: "10x Faster Response",
-      description: "All your communications in one place with intelligent automation that responds instantly."
-    },
-    {
-      icon: Calendar,
-      title: "Intelligent Scheduling",
-      subtitle: "Smart Booking System",
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-50", 
-      features: [
-        "Calendar sync",
-        "Auto reminders",
-        "Smart rescheduling",
-        "Time zone handling"
-      ],
-      metric: "98% Show-up Rate",
-      description: "Never miss another booking with intelligent scheduling that handles everything automatically."
-    }
-  ];
-
-  const automationMetrics = [
-    { label: "Time Saved", value: "40+ hrs/week", icon: Clock, color: "text-primary" },
-    { label: "Response Time", value: "< 30 seconds", icon: Zap, color: "text-accent" },
-    { label: "Success Rate", value: "96%", icon: Target, color: "text-emerald-500" },
-    { label: "24/7 Availability", value: "Always On", icon: Cpu, color: "text-purple-500" }
-  ];
-
+import React from 'react';
+import Navigation from '@/components/Navigation';
+import Hero from '@/components/Hero';
+import SystemCapabilities from '@/components/SystemCapabilities';
+import Features from '@/components/Features';
+import CoachAutomation from '@/components/CoachAutomation';
+import Pricing from '@/components/Pricing';
+import Testimonials from '@/components/Testimonials';
+import Footer from '@/components/Footer';
+import { useAuth } from '@/hooks/useAuth';
+const Index = () => {
+  const { user } = useAuth();
   return (
-    <section ref={sectionRef} className="py-20 lg:py-32 px-4 lg:px-6 bg-gradient-to-br from-primary/5 via-white to-accent/5 relative overflow-hidden">
-      {/* New geometric background pattern */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(120,119,198,0.1)_0%,transparent_50%)] opacity-60"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(6,182,212,0.1)_0%,transparent_50%)] opacity-60"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_49%,rgba(120,119,198,0.05)_49%,rgba(120,119,198,0.05)_51%,transparent_51%)] bg-[length:20px_20px]"></div>
-        <div className={`absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-3xl transition-all duration-[2000ms] ${isVisible ? 'animate-pulse opacity-100' : 'opacity-0'}`}></div>
-        <div className={`absolute bottom-20 left-10 w-80 h-80 bg-gradient-to-br from-accent/10 to-purple-500/10 rounded-full blur-3xl transition-all duration-[2000ms] delay-500 ${isVisible ? 'animate-pulse opacity-100' : 'opacity-0'}`}></div>
-      </div>
-
-      <div className="container mx-auto relative z-10">
-        {/* Header with brand colors */}
-        <div className={`text-center mb-16 lg:mb-20 transition-all duration-[800ms] ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary/15 to-accent/15 backdrop-blur-sm border border-primary/20 text-primary px-6 py-3 rounded-full text-sm font-medium mb-8 hover:scale-105 transition-transform duration-300">
-            <Sparkles className="w-4 h-4 animate-pulse" />
-            <span>Complete Automation Platform</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-            <span className="bg-gradient-to-r from-slate-900 via-primary to-accent bg-clip-text text-transparent">
-              Your Business Runs
-            </span>
-            <br />
-            <span className="text-slate-800">While You Sleep</span>
-          </h2>
-          
-          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Every lead captured. Every call answered. Every booking confirmed. All automated.
-          </p>
-        </div>
-
-        {/* Automation Metrics with brand theme */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16 lg:mb-20">
-          {automationMetrics.map((metric, index) => (
-            <Card 
-              key={index} 
-              className={`border-0 bg-white/80 backdrop-blur-sm text-center hover:bg-white/90 transition-all duration-500 hover:scale-105 group shadow-lg hover:shadow-xl border border-slate-200/50 ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}
-              style={{ transitionDelay: `${index * 200 + 400}ms`, transitionDuration: '800ms' }}
-            >
-              <CardContent className="p-6">
-                <metric.icon className={`h-8 w-8 ${metric.color} mx-auto mb-3 group-hover:scale-125 transition-transform duration-300`} />
-                <p className="text-2xl font-bold text-slate-900 mb-2">{metric.value}</p>
-                <p className="text-sm text-slate-600 font-medium">{metric.label}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Core Capabilities with new styling */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {coreCapabilities.map((capability, index) => (
-            <Card 
-              key={index} 
-              className={`border-0 bg-white/90 backdrop-blur-sm shadow-xl transition-all duration-[900ms] cursor-pointer group overflow-hidden hover:bg-white hover:shadow-2xl border border-slate-200/50 ${
-                hoveredService === index ? 'scale-105' : 'hover:scale-102'
-              } ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-              style={{ transitionDelay: `${index * 300 + 800}ms` }}
-              onMouseEnter={() => setHoveredService(index)}
-              onMouseLeave={() => setHoveredService(null)}
-            >
-              <div className={`h-1 bg-gradient-to-r ${capability.color} transition-all duration-300`}></div>
-              
-              <CardHeader className="text-center pb-4">
-                <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-r ${capability.color} flex items-center justify-center transform transition-all duration-300 ${
-                  hoveredService === index ? 'scale-110 rotate-3' : ''
-                } mb-4`}>
-                  <capability.icon className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle className="text-xl font-bold text-slate-900 mb-2">{capability.title}</CardTitle>
-                <p className="text-sm text-slate-600 font-medium">{capability.subtitle}</p>
-                <div className={`text-primary font-bold text-sm transition-all duration-300 ${
-                  hoveredService === index ? 'opacity-100' : 'opacity-0'
-                }`}>
-                  {capability.metric}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="px-6 pb-6">
-                <p className="text-slate-700 text-center mb-6 leading-relaxed">
-                  {capability.description}
-                </p>
-                
-                <div className="space-y-3">
-                  {capability.features.map((feature, featureIndex) => (
-                    <div 
-                      key={featureIndex} 
-                      className={`flex items-center space-x-3 transition-all duration-300 transform ${
-                        hoveredService === index ? 'translate-x-2' : ''
-                      }`}
-                    >
-                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span className="text-slate-700 text-sm">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* CTA with brand theme */}
-        <div className={`text-center transition-all duration-[1000ms] delay-[1600ms] ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <div className="bg-gradient-to-r from-white/90 to-white/95 backdrop-blur-sm rounded-3xl p-12 hover:from-white hover:to-white transition-all duration-500 hover:scale-105 group border border-slate-200/50 shadow-xl">
-            <div className="max-w-3xl mx-auto">
-              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                Stop Managing, Start Growing
-              </h3>
-              <p className="text-slate-600 mb-8 text-lg leading-relaxed">
-                While other coaches spend hours on admin work, you'll be scaling your practice with complete automation. Your AI team never sleeps, never makes mistakes, and always delivers results.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <Button className="px-10 py-4 bg-gradient-to-r from-primary to-purple-600 text-white text-lg rounded-full hover:scale-105 transition-all duration-300 group/btn shadow-xl">
-                  Start Automating Now
-                  <ArrowRight className="ml-2 h-5 w-5 inline group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </Button>
-                <Button variant="outline" className="px-10 py-4 border-2 border-primary/30 text-primary text-lg rounded-full hover:bg-primary/5 hover:text-primary hover:border-primary/50 hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-transparent">
-                  See It In Action
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <Hero />
+      <SystemCapabilities />
+      <Features />
+      <Pricing />
+      <CoachAutomation />
+      <Testimonials />
+      <Footer />
+    </div>
   );
 };
 
-export default SystemCapabilities;
+export default Index;
